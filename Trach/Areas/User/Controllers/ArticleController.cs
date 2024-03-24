@@ -93,7 +93,8 @@ namespace Trach.Areas.User.Controllers
 
         [Authorize (Roles = Roles.Auther)]
         [HttpGet]
-        public IActionResult deletePost (int id)
+        /////////
+        public IActionResult DeletePost (int id)
         {
             Article? article = unitOfWork.Article.Get (id);
 
@@ -105,6 +106,8 @@ namespace Trach.Areas.User.Controllers
                 }
                 unitOfWork.Article.Remove (article);    
             }
+            unitOfWork.Save();
+            // save
             return RedirectToAction("Index", "Home", new { area = "User" });
         }
     }
