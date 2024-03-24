@@ -1,0 +1,30 @@
+﻿
+@using BuiesnesLogic.Entities
+@model IEnumerable<ApplicationUser>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Image</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id.Substring(0, 3)</td>
+                <td>@user.Firstname</td>
+                <td>@user.Lastname</td>
+                <td>Image Handler</td>
+                <td>
+                    <form method="post" asp-action="Delete" asp-route-id="@user.Id">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

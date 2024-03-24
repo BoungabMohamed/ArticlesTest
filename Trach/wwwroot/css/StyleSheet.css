@@ -1,0 +1,27 @@
+﻿body {
+    display: flex;
+    flex-direction: column; /* Stacks flex items vertically */
+    justify-content: flex-end; /* Aligns content to the bottom */
+    align-items: center; /* Centers content horizontally */
+    min-height: 100vh; /* Ensures the body takes up at least the full viewport height */
+    margin: 0; /* Resets default margin */
+    padding-bottom: 20px; /* Adds some padding at the bottom */
+}
+
+.container {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    width: 100%;
+}
+
+.news-card {
+    background-color: #ffffff;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    border-radius: 0.125rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    padding: 0.8rem; /* Slightly decreased padding for a smaller appearance */
+    max-width: 90%;
+}
+
+/* Keep other styles as previously adjusted, modifying only if necessary for your design */

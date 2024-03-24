@@ -1,0 +1,137 @@
+﻿@using BuiesnesLogic.ModelView
+@using Trach.Utility;
+<link rel="stylesheet" href="~/css/Style.css" />
+@model UserArticlesMV
+
+<div class="container">
+    <div class="main-body">
+        <div class="row">
+            <!-- User Image and Name -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            @if (Model.user.Image != null)
+                            {
+                                <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(Model.user.Image)}")" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                            }
+                            else
+                            {
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-uljsEybwjvJZT1Ou7dm9kEyBwS5GmO-Wog&s" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                            }
+                            <div class="mt-3">
+                                <h2>@(Model.user.Firstname + ' ' + Model.user.Lastname)</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div> 
+            <!-- User Information Form -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <form method="post" asp-action="UpdateIformation">
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Firstname</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" class="form-control" name="firstname" value="@Model.user.Firstname">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Lastname</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" class="form-control" name="lastname" value="@Model.user.Lastname">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" class="form-control" name="email" value="@Model.user.Email">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Bio</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <textarea class="form-control" rows="4" name="bio">@Model.user.Bio</textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-9 text-secondary">
+                                    <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole (Roles.Auther))
+{
+    <!-- Articles Section -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    @if (Model.Articles.Count() > 0)
+                    {
+                        <div class="card-header">
+                            My Articles
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Subtitle</th>
+                                        <th>Post Date</th>
+                                        <th>Actions</th>
+                                        <th>Delete</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var article in Model.Articles)
+                                    {
+                                        <tr>
+                                            <td>@article.Title</td>
+                                            <td>@article.SubTitle</td>
+                                            <td>@article.PostDate.ToString("yyyy-MM-dd")</td>
+                                            <td>
+                                                <a href="@Url.Action("GetPost", "Article", new { id = article.Id })" class="btn btn-primary">View</a>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger">Delete</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-secondary">Edit</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-header">
+                            U dont have Articles
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

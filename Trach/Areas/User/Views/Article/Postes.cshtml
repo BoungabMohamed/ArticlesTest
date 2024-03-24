@@ -1,0 +1,29 @@
+﻿@using BuiesnesLogic.Entities
+@model IEnumerable<Article>
+
+<link rel="stylesheet" href="~/css/StyleSheet.css" />
+
+@foreach (var article in Model)
+{
+    <div class="container">
+        <div class="card news-card">
+            <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(article.Image)}")" style="width:800px; height:600px;" class="rounded mx-auto d-block" alt="Article Image">
+            <div class="card-section">
+                <div class="news-card-date">@article.PostDate.ToString("D")</div>
+                <div class="news-card-article">
+                    <form asp-area="User" asp-controller="Article" asp-action="GetPost" method="post">
+                        <input type="hidden" name="id" value="@article.Id" />
+                        <button type="submit" class="title-button">@article.Title</button>
+                    </form>
+                    <p>on : @article.PostDate</p>
+                    <p class="news-card-description">@article.SubTitle</p>
+                </div>
+                <div class="news-card-author">
+                    <div class="news-card-author-name">
+                        By <a asp-area="User" asp-controller="Article" asp-action="PostesBy" asp-route-id="@article.User?.Id">@($"{article.User?.Firstname} {article.User?.Lastname}")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
