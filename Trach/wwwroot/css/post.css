@@ -1,0 +1,67 @@
+﻿.article-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.article-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.article-header h1, .article-header h2 {
+    margin: 10px 0;
+}
+
+.post-date {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.comments-section, .add-comment-section {
+    margin-top: 40px;
+}
+
+.comment {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-content, .comment-date {
+    margin: 5px 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }

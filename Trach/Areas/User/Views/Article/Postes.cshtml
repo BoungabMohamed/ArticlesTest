@@ -1,29 +1,34 @@
-﻿@using BuiesnesLogic.Entities
-@model IEnumerable<Article>
+﻿<link rel="stylesheet" href="~/css/Postes.css" />
+@model IEnumerable<BuiesnesLogic.Entities.Article>
+<section class="dark">
+	<div class="container py-4">
+		<h1 class="h1 text-center" id="pageHeaderTitle">Articles</h1>
 
-<link rel="stylesheet" href="~/css/StyleSheet.css" />
-
-@foreach (var article in Model)
-{
-    <div class="container">
-        <div class="card news-card">
-            <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(article.Image)}")" style="width:800px; height:600px;" class="rounded mx-auto d-block" alt="Article Image">
-            <div class="card-section">
-                <div class="news-card-date">@article.PostDate.ToString("D")</div>
-                <div class="news-card-article">
-                    <form asp-area="User" asp-controller="Article" asp-action="GetPost" method="post">
-                        <input type="hidden" name="id" value="@article.Id" />
-                        <button type="submit" class="title-button">@article.Title</button>
-                    </form>
-                    <p>on : @article.PostDate</p>
-                    <p class="news-card-description">@article.SubTitle</p>
-                </div>
-                <div class="news-card-author">
-                    <div class="news-card-author-name">
-                        By <a asp-area="User" asp-controller="Article" asp-action="PostesBy" asp-route-id="@article.User?.Id">@($"{article.User?.Firstname} {article.User?.Lastname}")</a>
+		@foreach (var article in Model)
+        {
+            <article class="postcard dark blue">
+                <a class="postcard__img_link" href="#">
+                    <img class="postcard__img" src="@($"data:image/jpeg;base64,{Convert.ToBase64String(article.Image)}")" alt="@article.Title" />
+                </a>
+                <div class="postcard__text">
+                    <h1 class="postcard__title blue"><a href="#">@article.Title</a></h1>
+                    <div class="postcard__subtitle small">
+                        <time datetime="@article.PostDate">
+                            <i class="fas fa-calendar-alt mr-2"></i>@article.PostDate.ToString("ddd, MMM dd'\\t\\h' yyyy")
+                        </time>
                     </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt">@article.SubTitle</div>
+                    <ul class="postcard__tagbox">
+                        <li class="tag__item play blue">
+                            @* <a href="#"><i class="fas fa-play mr-2"></i>See More</a> *@
+                            <a href="@Url.Action("GetPost", "Article", new { id = article.Id })"><i class="fas fa-play mr-2"></i>See More</a>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-        </div>
+            </article>
+        }
     </div>
-}
+</section>
+
+

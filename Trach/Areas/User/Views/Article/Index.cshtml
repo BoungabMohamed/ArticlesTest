@@ -16,20 +16,54 @@
                             <label for="subTitle">Sub Title</label>
                             <input type="text" class="form-control" id="subTitle" name="subTitle" placeholder="Enter sub title" required>
                         </div>
+                        <!-- Removed the standard content textarea -->
                         <div class="form-group">
-                            <label for="content">Content</label>
-                            <textarea class="form-control" id="content" name="content" rows="5" placeholder="Enter content" required></textarea>
+                            <label>Content</label>
+                            <div id="editorjs"></div>
                         </div>
                         <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
                         </div>
+                        <!-- Hidden input for Editor.js content -->
+                        <input type="hidden" id="editorContent" name="content">
                     </div>
                     <div class="card-footer text-right">
-                        <button type="submit" class="btn btn-primary">Submit Article</button>
+                        <!-- Custom submit button -->
+                        <button type="button" onclick="submitForm()" class="btn btn-primary">Submit Article</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 }
+
+<script>
+    // Initialize Editor.js
+    const editor = new EditorJS({
+        holder: 'editorjs',
+        tools: {
+            header: {
+                class: Header,
+                inlineToolbar: true
+            },
+            image: {
+                class: SimpleImage,
+                inlineToolbar: true
+            },
+            code: {
+                class: CodeTool,
+                inlineToolbar: true
+            }
+        }
+    });
+
+    // Custom form submission to include Editor.js content
+    async function submitForm() {
+        const editorContent = await editor.save();
+        document.getElementById('editorContent').value = JSON.stringify(editorContent);
+        document.querySelector('form').submit();
+    }
+</script>
+
+
