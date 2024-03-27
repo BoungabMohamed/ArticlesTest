@@ -30,7 +30,7 @@
             <!-- User Information Form -->
             <div class="col-lg-8">
                 <div class="card">
-                    <form method="post" asp-action="UpdateIformation">
+                    <form method="post" asp-action="UpdateInformation">
                         <div class="card-body">
                             <div class="row mb-3">
                                 <div class="col-sm-3">
@@ -115,7 +115,8 @@
                                                 <a href="@Url.Action("DeletePost", "Article", new { id = article.Id })" class="btn btn-danger">Delete</a>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-secondary">Edit</button>
+                                                @* <button type="button" class="btn btn-secondary">Edit</button> *@
+                                                <a href="@Url.Action("Edit", "Article", new { id = article.Id })" class="btn btn-secondary">Edit</a>
                                             </td>
                                         </tr>
                                     }
@@ -126,7 +127,7 @@
                     else
                     {
                         <div class="card-header">
-                            U dont have Articles
+                            You dont have Articles
                         </div>
                     }
                 </div>

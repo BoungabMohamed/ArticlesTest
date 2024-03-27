@@ -1,0 +1,62 @@
+@model BuiesnesLogic.Entities.Article
+
+@{
+    ViewBag.Title = "Edit Article";
+}
+
+@* <link href="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest/dist/editor.js" rel="stylesheet"> *@
+<link rel="stylesheet" href="~/css/articleStyle.css" />
+
+@* <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest/dist/editor.js"></script> *@
+<!-- Include other Editor.js tools as needed -->
+
+<div class="container">
+    <h2>Edit Article</h2>
+    <form asp-action="EditPost" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" required>
+        </div>
+        <div class="form-group">
+            <label for="SubTitle">Subtitle</label>
+            <input type="text" class="form-control" id="SubTitle" name="SubTitle" value="@Model.SubTitle">
+        </div>
+        <div class="form-group" id="editorjs"></div>
+        <input type="hidden" id="Content" name="Content">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+<script>
+    async function initEditor() {
+        const editor = new EditorJS({
+            holder: 'editorjs',
+            tools: {
+                header: {
+                    class: Header,
+                    inlineToolbar: true
+                },
+                image: {
+                    class: SimpleImage,
+                    inlineToolbar: true
+                },
+                code: {
+                    class: CodeTool,
+                    inlineToolbar: true
+                },
+                
+            },
+            data: @Html.Raw(Model.Content)
+        });
+
+        document.querySelector('form').onsubmit = async (e) => {
+            e.preventDefault();
+            const editorData = await editor.save();
+            document.getElementById('Content').value = JSON.stringify(editorData);
+            e.target.submit();
+        };
+    }
+
+    initEditor();
+</script>

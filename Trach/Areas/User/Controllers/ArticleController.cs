@@ -93,7 +93,6 @@ namespace Trach.Areas.User.Controllers
 
         [Authorize (Roles = Roles.Auther)]
         [HttpGet]
-        /////////
         public IActionResult DeletePost (int id)
         {
             Article? article = unitOfWork.Article.Get (id);
@@ -109,6 +108,29 @@ namespace Trach.Areas.User.Controllers
             unitOfWork.Save();
             // save
             return RedirectToAction("Index", "Home", new { area = "User" });
+        }
+
+        [Authorize (Roles = Roles.Auther)]
+        [HttpGet]
+        public IActionResult Edit (int id)
+        {
+            var article = unitOfWork.Article.Get (id);
+            return View ("Edit" ,article);
+        }
+
+        [Authorize(Roles = Roles.Auther)]
+        [HttpPost]
+        public IActionResult EditPost (int id , string Title , string SubTitle , string Content)
+        {
+            var article = unitOfWork.Article.Get (id);
+            if (article != null)
+            {
+                article.Title = Title;
+                article.SubTitle = SubTitle;
+                article.Content = Content;
+                unitOfWork.Save();
+            }
+            return View("Succes");
         }
     }
 }

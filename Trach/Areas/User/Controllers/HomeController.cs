@@ -35,22 +35,37 @@ namespace Trach.Areas.User.Controllers
 			return View(userArticlesMV);
 		}
         [HttpPost]
-        public IActionResult UpdateIformation(string firstname, string lastname, string email, string bio)
+        public async Task<IActionResult> UpdateInformation(string firstname, string lastname, string email, string bio)
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
 
-            var user = userManager.GetUserAsync(User).GetAwaiter().GetResult();
+            user.Firstname = firstname;
+            user.Lastname = lastname;
+            user.Email = email;
+            // Manually set the NormalizedEmail. This is critical for the login process.
+            user.NormalizedEmail = userManager.NormalizeEmail(email);
+            user.NormalizedUserName = userManager.NormalizeName(email); 
+            user.UserName = email;
+            user.Bio = bio;
 
+            var result = await userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(); // Adjust as necessary based on your application.
+            }
 
-            user!.Firstname = firstname;
-            user!.Lastname = lastname;
-            user!.Email = email;
-            user!.Bio = bio;
-
-            userManager.UpdateAsync(user).GetAwaiter().GetResult();
-
-
-            return View("Index", user);
+            return RedirectToAction("Index");
         }
+
+
 
     }
 }

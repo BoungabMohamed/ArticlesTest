@@ -18,7 +18,7 @@
         <p class="post-date">Posted on @Model.PostDate.ToString("MMMM dd, yyyy") by @Model.User.UserName</p>
     </div>
 
-    <div id="editorjs-@Model.Id"></div>
+    <div id="editorjs"></div>
 
     <div class="comments-section">
         <h3>Comments:</h3>
@@ -44,23 +44,32 @@
         </div>
     </div>
 </div>
-
-<script src="~/path/to/editor.js"></script>
 <script>
-    
-    (function () {
-        var articleContent = @Html.Raw(Model.Content);
+    async function displayEditorContent() {
+        const editorContent = @Html.Raw(Model.Content);
 
         const editor = new EditorJS({
-            holder: 'editorjs-@Model.Id',
+            holder: 'editorjs',
             readOnly: true,
             tools: {
-                header: Header,
-                image: SimpleImage,
-                code: CodeTool,
-            
+                header: {
+                    class: Header,
+                    inlineToolbar: true
+                },
+                image: {
+                    class: SimpleImage,
+                    inlineToolbar: true
+                },
+                code: {
+                    class: CodeTool,
+                    inlineToolbar: true
+                },
+                
             },
-            data: articleContent
+            data: editorContent
         });
-    })();
+    }
+
+    // Call the function to display the content
+    displayEditorContent();
 </script>
